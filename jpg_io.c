@@ -40,9 +40,9 @@ picture read_jpeg(char *name) {
   while( cinfo.output_scanline < cinfo.image_height)  {
     jpeg_read_scanlines( &cinfo, row_pointer, 1 );
     for( i=0; i<cinfo.image_width*3;i+=3){
-      img.pixels[location++].red = row_pointer[0][i];
-      img.pixels[location++].green = row_pointer[0][i+1];
-      img.pixels[location++].blue = row_pointer[0][i+2];
+      img.pixels[location].red = row_pointer[0][i];
+      img.pixels[location].green = row_pointer[0][i+1];
+      img.pixels[location].blue = row_pointer[0][i+2];
       location++;
     }
 

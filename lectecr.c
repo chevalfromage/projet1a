@@ -55,19 +55,20 @@ void copy(char* name_entree, char* name_sortie){
     char format_sortie[3];
     static char liste_format[2][4] = {"ppm","jpg"};
     //recuperation du format
-    for (int i = n_entree-1;i>n_entree-4;i--){
-        format_entree[n_entree-1-i] = name_entree[i];
-    }
-    for (int i = n_sortie-1;i>n_sortie-4;i--){
-        format_sortie[n_sortie-1-i] = name_sortie[i];
-    }
-    /*
-    //verification si format valide 
-    for (int i=0;i<3;i++){
-        if (format_entree[i]!= liste_format[0][i] || format_entree[i]!= liste_format[1][i]){
+    printf("%c\n", liste_format[0][0]);
+    for (int i = 0;i<3;i++){
+        printf("%d\n",i);
+        format_entree[i] = name_entree[n_entree -3+i];
+        //verification si format valide 
+        if (format_entree[i]!= liste_format[0][i] && format_entree[i]!= liste_format[1][i]){
             printf("L'image rentree n'a pas un bon format\n");
         }
-    }*/
+    }
+    for (int i = 0;i<3;i++){
+        format_sortie[i] = name_sortie[n_sortie-3+i];
+    }
+    
+
     //on change le format
     picture img;
     if (format_entree[0] == 'p' && format_sortie[0] == 'j'){
@@ -76,6 +77,7 @@ void copy(char* name_entree, char* name_sortie){
     }
     else{
         img = read_jpeg(name_entree);
+        printf("%d,%d\n",img.width,img.height);
         save_pic(img,name_sortie);
     }
     
