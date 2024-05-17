@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "lectecr.h"
 #include "jpg_io.h"
+#include <string.h>
 
 int main (int argc, char **argv){
     char *fonction=NULL;
@@ -25,7 +26,16 @@ int main (int argc, char **argv){
         default:
             abort ();
     }
-    copy(input,output);
+    if(strcmp(fonction,"copy")==0){
+        copy(input,output);
+    }
+    else if(strcmp(fonction,"gray")==0){
+        gray(input,output);
+    }
+    else{
+        printf("apprend-a-ecrire.com");
+    }
+    
 
     printf("fonction = %s, input = %s, output = %s\n",fonction, input, output);
     return 0;

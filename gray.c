@@ -1,51 +1,15 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-typedef struct {
-    unsigned char red, green, blue;
-} color;
-
-typedef struct {
-    int width;
-    int height;
-    color* pixels;
-} picture;
-
-
-int main(){
-    FILE* im = fopen("gris.ppm","r");
-    FILE* im_s = fopen("transfo.ppm","w");
-    int width, height, max_color;
-    color* image_data;
-    picture* pic;
-    char format[3];
-
-    fscanf(im, "%2s", format);
-    fscanf(im, "%d %d", &width, &height);
-    fscanf(im, "%d", &max_color);
-    fgetc(im);
-
-    image_data = (color*)malloc(height*width*sizeof(color));
-    fread(image_data,sizeof(color), height*width,im);
-    fclose(im);
-    printf("%d,%d,%d\n", width, height, max_color);
-
-    pic = (picture*)malloc(sizeof(int)*2+height*width*sizeof(color));
-    pic->width=width;
-    pic->height=height;
-    pic->pixels=image_data;
-
-
-    //fonction gris
-    fprintf(im_s,"P6 600 400 255 ");
+void gray(char* im_e,char* im_s){
     
-    for(int i=1; i<=width*height; i++){
-        fputc((pic->pixels[i].red+pic->pixels[i].green+pic->pixels[i].blue)/3,im_s);
-        fputc((pic->pixels[i].red+pic->pixels[i].green+pic->pixels[i].blue)/3,im_s);
-        fputc((pic->pixels[i].red+pic->pixels[i].green+pic->pixels[i].blue)/3,im_s);
+    picture img = read_pic(im_e);
+    
+    for(int i=1; i<=img.width*img.height; i++){
+        img.pixels[i].red=(img.pixels[i].red+img.pixels[i].green+img.pixels[i].blue)/3;
+        img.pixels[i].green=(img.pixels[i].red+img.pixels[i].green+img.pixels[i].blue)/3;
+        img.pixels[i].blue=(img.pixels[i].red+img.pixels[i].green+img.pixels[i].blue)/3;
     }
-    //
 
-
-    return 1;
+    save_pic(img, im_s)
 }
