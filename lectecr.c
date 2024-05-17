@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-#include "jpg_io.h"
+#include "lectecr.h"
 
 picture read_pic(char* imageppm){
     FILE* im = fopen(imageppm,"r");
@@ -26,20 +26,7 @@ picture read_pic(char* imageppm){
     pic->height=height;
     pic->pixels=image_data;
     
-    return pic;
-    
-    /*
-    picture pic;
-    FILE* f = fopen(imageppm,"r");
-    char* c = "";
-    int width,height;
-    fscanf(f,"%s\n",c);
-    printf("%s\n",c);
-    fscanf(f,"%d %d\n",&width,&height);
-    pic.width = width-1;
-    pic.height = height-1;
-    pic.pixels = malloc(width*height*sizeof(color));
-    return pic;*/
+    return *pic;
 }
 
 void save_pic(picture pic, char* fichier){
@@ -67,9 +54,6 @@ void copy(char* name_entree, char* name_sortie){
     char format_entree[3];
     char format_sortie[3];
     static char liste_format[2][4] = {"ppm","jpg"};
-    FILE* f;
-
-    char* new_output;
     //recuperation du format
     for (int i = n_entree-1;i>n_entree-4;i--){
         format_entree[n_entree-1-i] = name_entree[i];
@@ -77,17 +61,17 @@ void copy(char* name_entree, char* name_sortie){
     for (int i = n_sortie-1;i>n_sortie-4;i--){
         format_sortie[n_sortie-1-i] = name_sortie[i];
     }
-
+    /*
     //verification si format valide 
     for (int i=0;i<3;i++){
         if (format_entree[i]!= liste_format[0][i] || format_entree[i]!= liste_format[1][i]){
             printf("L'image rentree n'a pas un bon format\n");
         }
-    }
+    }*/
     //on change le format
     picture img;
     if (format_entree[0] == 'p' && format_sortie[0] == 'j'){
-        img = read_pic(nam_entree);
+        img = read_pic(name_entree);
         save_jpeg(name_sortie,img);
     }
     else{
@@ -95,13 +79,4 @@ void copy(char* name_entree, char* name_sortie){
         save_pic(img,name_sortie);
     }
     
-}
-
-
-
-
-int main(){
-
-    read_pic("cheese.ppm");
-    return 0;
 }

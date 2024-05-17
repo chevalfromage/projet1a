@@ -11,13 +11,12 @@ picture read_jpeg(char *name) {
   FILE *f;
   struct jpeg_decompress_struct cinfo;
   struct jpeg_error_mgr jerr;
-  int bytes_per_pixel;
   picture img;
   JSAMPROW row_pointer[1];
   unsigned int location = 0;
   int i = 0;
 
-  f = fopen(name, "r");
+  f = fopen(name, "rb");
   
   cinfo.err = jpeg_std_error(&jerr);
 
@@ -36,12 +35,17 @@ picture read_jpeg(char *name) {
     
   jpeg_start_decompress( &cinfo );
   row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*3 );
-  img.pixels = malloc(img.height*img.width*3);
+  img.pixels = (color*)malloc(img.height*img.width*sizeof(color));
 
   while( cinfo.output_scanline < cinfo.image_height)  {
     jpeg_read_scanlines( &cinfo, row_pointer, 1 );
-    for( i=0; i<cinfo.image_width*3;i++)
-      img.pixels[location++] = row_pointer[0][i];
+    for( i=0; i<cinfo.image_width*3;i+=3){
+      img.pixels[location++].red = row_pointer[0][i];
+      img.pixels[location++].green = row_pointer[0][i+1];
+      img.pixels[location++].blue = row_pointer[0][i+2];
+      location++;
+    }
+
   }
 
   jpeg_finish_decompress( &cinfo );
@@ -79,7 +83,7 @@ void save_jpeg(char *name, picture img) {
   jpeg_start_compress(&cinfo, TRUE);
 
   for (i = 0; i < img.height; i++) {
-    current_line = img.pixels + i * img.width * 3;
+    current_line = (unsigned char*)(img.pixels + i * img.width);
     jpeg_write_scanlines(&cinfo, &current_line, 1);
   }
 
