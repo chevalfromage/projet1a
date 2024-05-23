@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include "gray.h"
 
 void gray(char* im_e,char* im_s){
     
@@ -11,5 +12,5 @@ void gray(char* im_e,char* im_s){
         img.pixels[i].blue=(img.pixels[i].red+img.pixels[i].green+img.pixels[i].blue)/3;
     }
 
-    save_pic(img, im_s)
+    save_pic(img, im_s);
 }

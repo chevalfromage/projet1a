@@ -55,9 +55,9 @@ void copy(char* name_entree, char* name_sortie){
     char format_sortie[3];
     static char liste_format[2][4] = {"ppm","jpg"};
     //recuperation du format
-    printf("%c\n", liste_format[0][0]);
+    printf("caca %c\n", liste_format[0][0]);
     for (int i = 0;i<3;i++){
-        printf("%d\n",i);
+        printf("pipi %d\n",i);
         format_entree[i] = name_entree[n_entree -3+i];
         //verification si format valide 
         if (format_entree[i]!= liste_format[0][i] && format_entree[i]!= liste_format[1][i]){
