@@ -43,7 +43,7 @@ int main (int argc, char **argv){
     }
 
     if(input_mask!=NULL){
-        mask();
+        mask(input,output,input_mask);
     }
   
 

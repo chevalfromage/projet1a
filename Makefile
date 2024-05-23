@@ -1,8 +1,12 @@
 objects = main.o lectecr.o jpg_io.o gray.o mask.o
-	
-program : $(objects)
+
+valgrind : $(objects)
 	gcc -Wall -o program $(objects) -ljpeg
-	./program -t gray -o cat_gray.ppm -i cat.ppm -m prout
+	valgrind ./program -t gray -o person.ppm -i person.ppm -m mask_person.ppm
+
+run : $(objects)
+	gcc -Wall -o program $(objects) -ljpeg
+	./program -t gray -o person_masked.ppm -i person.ppm -m mask_person.ppm
 	
 main.o : main.c lectecr.h jpg_io.h
 	gcc -Wall -c main.c
