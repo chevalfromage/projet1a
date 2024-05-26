@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include "flou.h"
 
-void flou(char* imageppm,int s){
+void flou(char* imageppm,char* out,int s){
     FILE* f = fopen(imageppm,"r");
     picture pic = read_pic(imageppm);
-    static int tab[pic.wight][pic.height][3];
-    static float new_tab[pic.wight][pic.height][3];
+    static int tab[pic.width][pic.height][3];
+    static float new_tab[pic.width][pic.height][3];
     picture new_pic;
     new_pic.height = pic.height;
     new_pic.width = pic.width;
@@ -159,7 +159,7 @@ void flou(char* imageppm,int s){
                     new_tab[i][j][0] = moy_red;
                     new_tab[i][j][1] = moy_green;
                     new_tab[i][j][2] = moy_blue;
-            }            }
+            }            
             else {
                 for (int k= i-s;k<i+s+1<k++){
                     for (int l=j-s;l<j+s+1<l++){
@@ -177,7 +177,7 @@ void flou(char* imageppm,int s){
                 new_tab[i][j][2] = moy_blue; 
             }
             new_pic.pixels[i*new_pic.width+j] = new_tab[i][j];
-
+        }
     }
-    save_pic(new_pic,image_flou);
+    save_pic(new_pic,out);
 }

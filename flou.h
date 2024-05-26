@@ -5,7 +5,7 @@
 
 
 
-void flou(char* imageppm,int s);
+void flou(char* imageppm,char* out,int s);
 
 
 

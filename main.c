@@ -6,6 +6,7 @@
 #include "jpg_io.h"
 #include "gray.h"
 #include "mask.h"
+#include "flou.h"
 #include <string.h>
 
 int main (int argc, char **argv){
@@ -13,9 +14,10 @@ int main (int argc, char **argv){
     char *input = NULL;
     char *output = NULL;
     char *input_mask = NULL;
+    char *s=NULL;
     int c;
 
-    while ((c = getopt (argc, argv, "t:i:o:m:")) != -1)
+    while ((c = getopt (argc, argv, "t:i:o:m:s")) != -1)
         switch (c){
             case 't':
                 fonction = optarg;
@@ -29,6 +31,9 @@ int main (int argc, char **argv){
             case 'm':
                 input_mask = optarg;
                 break;
+            case 's':
+                s = optarg;
+                break;
         default:
             abort ();
     }
@@ -38,6 +43,10 @@ int main (int argc, char **argv){
     else if(strcmp(fonction,"gray")==0){
         gray(input,output);
     }
+    else if(strcmp(fonction,"blur")==0){
+        printf("%d\n",s[0]-48);
+        //flou(input,output,s[0]-48);
+    }   
     else{
         printf("apprend-a-ecrire.com");
     }
