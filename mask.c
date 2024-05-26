@@ -13,7 +13,7 @@ void mask(char* im_i,char* im_f,char* input_mask){
     }
     
     for(int i=1; i<=img.width*img.height; i++){
-        if(pic_mask.pixels[i].red==0){
+        if(pic_mask.pixels[i].red==255){
             img.pixels[i].red=input.pixels[i].red;
             img.pixels[i].green=input.pixels[i].green;
             img.pixels[i].blue=input.pixels[i].blue;
