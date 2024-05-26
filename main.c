@@ -60,9 +60,13 @@ int main (int argc, char **argv){
         gray("passage.ppm","passage_fonction.ppm");
     }
     else if(strcmp(fonction,"blur")==0){
-        printf("%d\n",s[0]-48);
-        //flou(input,output,s[0]-48);
-    }   
+        copy(input,"passage.ppm");
+        flou("passage.ppm","passage_fonction.ppm",8);
+    }
+    /*else if(strcmp(fonction,"medfilt")==0){
+        copy(input,"passage.ppm");
+        med("passage.ppm","passage_fonction.ppm",1);
+    }*/
     else{
         printf("Erreur: la fonction %s n'existe pas\n", fonction);
         return 1;

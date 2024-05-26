@@ -6,6 +6,12 @@
 
 picture read_pic(char* imageppm){
     FILE* im = fopen(imageppm,"r");
+    
+    if(im ==NULL){
+        printf("Erreur: l'image %s n'existe pas\n",imageppm);
+        exit(1);
+    }
+
     int width, height, max_color;
     color* image_data;
     picture* pic;
@@ -19,7 +25,7 @@ picture read_pic(char* imageppm){
     image_data = (color*)malloc(height*width*sizeof(color));
     fread(image_data,sizeof(color), height*width,im);
     fclose(im);
-    printf("%d,%d,%d\n", width, height, max_color);
+    //printf("%d,%d,%d\n", width, height, max_color);
 
     pic = (picture*)malloc(sizeof(int)*2+height*width*sizeof(color));
     pic->width=width;
@@ -54,7 +60,6 @@ void copy(char* name_entree, char* name_sortie){
     char format_entree[4];
     char format_sortie[4];
     //recuperation du format
-    //printf("%c\n", liste_format[0][0]);
     for (int i = 0;i<3;i++){
         format_entree[i] = name_entree[n_entree -3+i];
     }
@@ -64,13 +69,13 @@ void copy(char* name_entree, char* name_sortie){
         format_sortie[i] = name_sortie[n_sortie-3+i];
     }
     format_sortie[3]='\0';
-
+    
     if((strcmp(format_entree, "ppm")!=0 && strcmp(format_entree, "jpg")!=0) || (strcmp(format_sortie, "ppm")!=0 && strcmp(format_sortie, "jpg")!=0)){
         if((strcmp(format_entree, "ppm")!=0 && strcmp(format_entree, "jpg")!=0)){
-            printf("Erreur: format .%s de l'input non pris en compte\n",format_entree);
+            printf("Erreur: format de l'input non pris en compte\n");
         }
         if(strcmp(format_sortie, "ppm")!=0 && strcmp(format_sortie, "jpg")!=0){
-            printf("Erreur: format .%s de l'output non pris en compte\n",format_sortie);
+            printf("Erreur: format de l'output non pris en compte\n");
         }
         exit(1);
     }
@@ -83,7 +88,6 @@ void copy(char* name_entree, char* name_sortie){
     }
     else if (format_entree[0] == 'j' && format_sortie[0] == 'p'){
         img = read_jpeg(name_entree);
-        printf("%d,%d\n",img.width,img.height);
         save_pic(img,name_sortie);
     }
     else if (format_entree[0] == 'p' && format_sortie[0] == 'p'){

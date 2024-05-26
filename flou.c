@@ -23,12 +23,13 @@ void flou(char* imageppm,char* out,int s){
             tab[i][j] = pic.pixels[i*pic.width+j];
         }
     }
-    
+    int compt = 0;
     for (int i =0;i< pic.height;i++){
         for (int j =0;j<pic.width;j++){
             int s_red =0;
             int s_green = 0;
             int s_blue=0;
+            compt+=1;
             printf("%d,%d,%d\n",pic.pixels[i*pic.width+j].red,pic.pixels[i*pic.width+j].green,pic.pixels[i*pic.width+j].blue);
             for (int k= i-s;k<i+s+1;k++){
                 if (k<pic.height && k>=0){
@@ -52,7 +53,7 @@ void flou(char* imageppm,char* out,int s){
             new_tab[i][j].green = moy_green;
             new_tab[i][j].blue = moy_blue;
             //printf("%d,%d,%d\n",new_tab[i][j].red,new_tab[i][j].green,new_tab[i][j].blue);
-
+            printf("%d,%d\n",compt,pic.height*pic.width);
             new_pic.pixels[i*new_pic.width+j].red = new_tab[i][j].red;
             new_pic.pixels[i*new_pic.width+j].green = new_tab[i][j].green;
             new_pic.pixels[i*new_pic.width+j].blue = new_tab[i][j].blue;
@@ -68,9 +69,10 @@ void flou(char* imageppm,char* out,int s){
     free(tab);
     free(new_tab);
     
-    free(new_pic.pixels);
+    
     printf("000i\n");
     save_pic(new_pic,out);
+    free(new_pic.pixels);
     printf("000i\n");
     
 }
