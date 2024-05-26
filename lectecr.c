@@ -32,7 +32,7 @@ picture read_pic(char* imageppm){
 void save_pic(picture pic, char* fichier){
     FILE* image = fopen(fichier,"w");
     if (image==NULL){
-        printf("erreur creation fichier\n");
+        printf("Erreur: creation fichier\n");
     }
     else{
         
@@ -51,23 +51,29 @@ void save_pic(picture pic, char* fichier){
 void copy(char* name_entree, char* name_sortie){
     int n_entree = strlen(name_entree);
     int n_sortie = strlen(name_sortie);
-    char format_entree[3];
-    char format_sortie[3];
-    static char liste_format[2][4] = {"ppm","jpg"};
+    char format_entree[4];
+    char format_sortie[4];
     //recuperation du format
-    printf("%c\n", liste_format[0][0]);
+    //printf("%c\n", liste_format[0][0]);
     for (int i = 0;i<3;i++){
-        printf("%d\n",i);
         format_entree[i] = name_entree[n_entree -3+i];
-        //verification si format valide 
-        if (format_entree[i]!= liste_format[0][i] && format_entree[i]!= liste_format[1][i]){
-            printf("L'image rentree n'a pas un bon format\n");
-        }
     }
+    format_entree[3]='\0';
+
     for (int i = 0;i<3;i++){
         format_sortie[i] = name_sortie[n_sortie-3+i];
     }
-    
+    format_sortie[3]='\0';
+
+    if((strcmp(format_entree, "ppm")!=0 && strcmp(format_entree, "jpg")!=0) || (strcmp(format_sortie, "ppm")!=0 && strcmp(format_sortie, "jpg")!=0)){
+        if((strcmp(format_entree, "ppm")!=0 && strcmp(format_entree, "jpg")!=0)){
+            printf("Erreur: format .%s de l'input non pris en compte\n",format_entree);
+        }
+        if(strcmp(format_sortie, "ppm")!=0 && strcmp(format_sortie, "jpg")!=0){
+            printf("Erreur: format .%s de l'output non pris en compte\n",format_sortie);
+        }
+        exit(1);
+    }
 
     //on change le format
     picture img;
@@ -88,4 +94,5 @@ void copy(char* name_entree, char* name_sortie){
         img = read_jpeg(name_entree);
         save_jpeg(name_sortie,img);
     }
+    
 }

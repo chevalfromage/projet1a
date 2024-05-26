@@ -37,6 +37,21 @@ int main (int argc, char **argv){
         default:
             abort ();
     }
+
+    if(input==NULL || output==NULL || fonction==NULL){
+        if(input==NULL){
+            printf("Erreur: pas d'input\n");
+        }
+        if(output==NULL){
+            printf("Erreur: pas d'output\n");
+        }
+        if(fonction==NULL){
+            printf("Erreur: pas de fonction\n");
+        }
+        return 1;
+    }
+    
+
     if(strcmp(fonction,"copy")==0){
         copy(input,output);
     }
@@ -49,16 +64,20 @@ int main (int argc, char **argv){
         //flou(input,output,s[0]-48);
     }   
     else{
-        printf("apprend-a-ecrire.com");
+        printf("Erreur: la fonction %s n'existe pas\n", fonction);
+        return 1;
     }
 
     if(input_mask!=NULL){
         mask("passage.ppm","passage_fonction.ppm",input_mask);
     }
-    copy("passage_fonction.ppm",output);
-    remove("passage_fonction.ppm");
-    remove("passage.ppm");
 
+    if(strcmp(fonction,"copy")!=0){
+        copy("passage_fonction.ppm",output);
+        remove("passage_fonction.ppm");
+        remove("passage.ppm");
+    }
+    
     printf("fonction = %s, input = %s, output = %s\n",fonction, input, output);
     return 0;
 }
