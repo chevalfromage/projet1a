@@ -17,6 +17,11 @@ picture read_jpeg(char *name) {
   int i = 0;
 
   f = fopen(name, "rb");
+
+  if(f==NULL){
+    printf("Erreur: l'image %s n'existe pas\n",name);
+    exit(1);
+  }
   
   cinfo.err = jpeg_std_error(&jerr);
 
