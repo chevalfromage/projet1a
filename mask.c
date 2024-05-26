@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "mask.h"
 
 void mask(char* im_i,char* im_f,char* input_mask){
