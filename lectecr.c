@@ -75,10 +75,17 @@ void copy(char* name_entree, char* name_sortie){
         img = read_pic(name_entree);
         save_jpeg(name_sortie,img);
     }
-    else{
+    else if (format_entree[0] == 'j' && format_sortie[0] == 'p'){
         img = read_jpeg(name_entree);
         printf("%d,%d\n",img.width,img.height);
         save_pic(img,name_sortie);
     }
-    
+    else if (format_entree[0] == 'p' && format_sortie[0] == 'p'){
+        img = read_pic(name_entree);
+        save_pic(img,name_sortie);
+    }
+    else{
+        img = read_jpeg(name_entree);
+        save_jpeg(name_sortie,img);
+    }
 }

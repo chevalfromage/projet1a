@@ -41,7 +41,8 @@ int main (int argc, char **argv){
         copy(input,output);
     }
     else if(strcmp(fonction,"gray")==0){
-        gray(input,output);
+        copy(input,"passage.ppm");
+        gray("passage.ppm","passage_fonction.ppm");
     }
     else if(strcmp(fonction,"blur")==0){
         printf("%d\n",s[0]-48);
@@ -52,9 +53,11 @@ int main (int argc, char **argv){
     }
 
     if(input_mask!=NULL){
-        mask(input,output,input_mask);
+        mask("passage.ppm","passage_fonction.ppm",input_mask);
     }
-  
+    copy("passage_fonction.ppm",output);
+    remove("passage_fonction.ppm");
+    remove("passage.ppm");
 
     printf("fonction = %s, input = %s, output = %s\n",fonction, input, output);
     return 0;
